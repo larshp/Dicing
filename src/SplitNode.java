@@ -1,8 +1,12 @@
+import java.util.BitSet;
+
 
 public class SplitNode implements Node {
 
+	private BitSet contents = null;
+	
 	SplitNode() {
-		
+//		contents = 
 	}
 	
 	@Override
