@@ -7,10 +7,20 @@ public class Main {
 	public static void main(String[] args) {
 
 		Controller.init();
-	//	Controller.insert("0000000000000000");
+		Controller.insert("000000AAAAA");
+		Controller.insert("112345AAAAA");
+		Controller.insert("007345AAAAA");
+		Controller.insert("FFFFFFFFFFF");
 
-
-		memInfo();
+		/*
+		Controller.nodeDump(0);
+		Controller.nodeDump(1);
+		Controller.nodeDump(2);
+		Controller.nodeDump(17);
+		Controller.nodeDump(17*16+1);
+		Controller.nodeDump(4369);
+		*/
+	//	memInfo();
 	}
 
 	public static void memInfo() {
