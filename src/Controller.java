@@ -5,15 +5,17 @@ public class Controller {
 	// 400 = 6400 mb
 	// 800 = 12800 mb
 	// 2000 = 32000 mb
-	private static final int leaf_size = 60; // in bytes
+	private static final int leaf_size = 70; // in bytes, increase with 10
 	private static final int node_levels = 5; // plus one
 	private static final int leaf_split = 20;
-	
+
 	private static int leaf_offset = 0;
 	private static int leaves = 0;
 
 	private static char nodedata[];
 	private static byte[] leafdata[];
+
+	public static int element_count = 0;
 
 	public static void init() {
 
@@ -30,8 +32,7 @@ public class Controller {
 		}
 		leaf_offset = total;
 		leaves = last * Main.vocabulary.length();
-		System.out.println("Leaves:\t" + leaves + " " + leaf_size/leaf_split);
-		
+
 		if (verbose == true) {
 			System.out.println("Node size: 2 bytes");
 			System.out.println("Nodes:\t" + total + "("
@@ -40,11 +41,11 @@ public class Controller {
 					+ (leaves * leaf_size / 1024 / 1024) + "mb)");
 			System.out.println("Bits per leaf:\t" + leaf_size * 8);
 			System.out.println("Chars per leaf:\t" + leaf_size * 8 / 4
-					+ ", 5 per value");
+					+ ", 4 per value");
 		}
 
 		nodedata = new char[total]; // node size is 2 bytes = 1 char
-		leafdata = new byte[leaf_size][leaves];
+		leafdata = new byte[leaf_size + 1][leaves];
 
 		System.out.println("Memory Allocated");
 
@@ -88,16 +89,24 @@ public class Controller {
 	}
 
 	private static boolean leafInsert(int num, String str) {
-		System.out.println("leaf insert\t" + num + "\t" + str.substring(6));
-		
-		int splits = leaf_size / leaf_split;
-		int leaves_per_split = leaves / splits;
-		System.out.println(leaves+" " + leaves_per_split);
-		int index = num / leaves_per_split;
-		int sub_start = 666;
-		System.out.println(index + " "+sub_start);
-//		leafdata[leaf_size / leaf_split][leaves * leaf_split];
-		
+		// System.out.println("leaf insert\t" + num + "\t" + str.substring(6));
+
+		int per = leaves / leaf_size;
+		int index = num / per;
+		int sub = (num - index * per) * leaf_size;
+
+		// System.out.println("index " + index + " sub " + sub);
+		element_count = element_count + 1;
+
+		for (int i = sub; i < sub + leaf_size; i++) {
+			byte c = leafdata[index][sub];
+			if (leafdata[index][i] == 0x00) {
+				leafdata[index][i] = 0x0B;
+			} else {
+				leafdata[index][i] = 0x00;
+			}
+		}
+
 		return false;
 	}
 
