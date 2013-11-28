@@ -1,24 +1,30 @@
 public class Controller {
 
-	private static char[] splitNodes[];
+	private static byte nodedata[];
 
 	public static void init() {
 
-		int nodes = 0;
-
+		int total = 0;
+		int bytes;
+		
+		System.out.println("Vocabulary length: " + Main.vocabulary.length());
+		bytes = (int)Math.ceil(Main.vocabulary.length() / 8.0);
+		System.out.println("Node size: " + bytes + " bytes");
+		
 		// calculate levels
-		for (int i = 1; i <= 6; i++) {
-			nodes = nodes + (int) Math.pow(Main.length, i);
+		for (int i = 0; i <= 7; i++) {
+			int local = (int) Math.pow(Main.vocabulary.length(), i);
+			System.out.println("Level: "+i + ", nodes: " + local);
+			total = total + local;
 		}
-		System.out.println("Nodes: " + nodes);
+		System.out.println("Nodes: " + total);
 
-		splitNodes = new char[nodes][4];
+		nodedata = new byte[total*bytes];
+		
+		System.out.println("Allocated");
 	}
 
 	public static boolean find(String str) {
-		if (str.length() != Main.length) {
-			return false;
-		}
 		
 		
 		return false;
@@ -26,24 +32,8 @@ public class Controller {
 
 	public static boolean insert(String str) {
 		
-		int next = 0;
-		
-		if (str.length() != Main.length) {
-			return false;
-		}
-		
-		for(int i=0;i<Main.length;i++) {
-			char c = str.charAt(i);
-			System.out.println("At: " + i + " " + c);
-	//		next = splitFind(next)
-		}
 		
 		return false;
 	}
 
-	
-	private static int splitFind(int node, char c) {
-// todo, raise not found		
-		return 1;
-	}
 }

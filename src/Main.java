@@ -1,15 +1,15 @@
 
 public class Main {
 
-	public static String vocabulary = "0123456789ABCDEFGHKMNPRSTVWXYZ";
-	public static int length = 16;
+//	public static String vocabulary = "0123456789ABCDEFGHKMNPRSTVWXYZ";
+	public static String vocabulary = "0123456789ABCDEF";
 	
 	public static void main(String[] args) {
 
 		Controller.init();
 		Controller.insert("ABC2384756192784");
 		
-		// memInfo();
+//		memInfo();
 	}
 
 	
