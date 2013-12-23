@@ -26,7 +26,6 @@ public class RandomProducer implements Runnable{
 		for(int i=0;i<count;i++) {
 			try {
 				queue.put(random());
-				System.out.println(queue.size());
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 				return;
@@ -34,5 +33,4 @@ public class RandomProducer implements Runnable{
 		}
 		Main.running = false;
 	}
-	
 }

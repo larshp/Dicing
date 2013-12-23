@@ -1,4 +1,3 @@
-import java.util.Date;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
@@ -12,12 +11,6 @@ public class Main {
 	public static volatile boolean running = true;
 
 	public static void main(String[] args) throws InterruptedException {
-
-		/*
-		 * Controller.insert("000000AAAAA"); Controller.insert("002345AAAAA");
-		 * Controller.insert("88888888888"); Controller.insert("FFFFFEFFFFF");
-		 * Controller.insert("FFFFFFFFFFF");
-		 */
 
 		running = true;
 
@@ -38,20 +31,12 @@ public class Main {
 
 		long stopTime = System.currentTimeMillis();
 		long elapsedSec = (stopTime - startTime) / 1000;
-//		int count = Controller.element_count;
+		count = Controller.element_count;
 		System.out.println("Element count: " + count);
 		System.out.println("Elapsed: " + elapsedSec + " sec");
 		if (elapsedSec != 0) {
 			System.out.println("Elements/sec: " + count / elapsedSec);
 		}
-
-		/*
-		 * Controller.nodeDump(0); Controller.nodeDump(1);
-		 * Controller.nodeDump(2); Controller.nodeDump(17);
-		 * Controller.nodeDump(273); Controller.nodeDump(4369);
-		 * Controller.nodeDump(69904); Controller.nodeDump(69905); // next level
-		 * Controller.nodeDump(69906); Controller.nodeDump(69907);
-		 */
 
 		// memInfo();
 	}

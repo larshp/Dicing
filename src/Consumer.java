@@ -22,8 +22,7 @@ public class Consumer implements Runnable {
 					sleep();
 				}
 			} else {
-				// todo, process
-				// System.out.println("Took " + str);
+				Controller.insert(str);
 			}
 		}
 	}
