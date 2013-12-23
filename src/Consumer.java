@@ -16,7 +16,7 @@ public class Consumer implements Runnable {
 			str = queue.poll();
 
 			if (str == null) {
-				if (Main.running == false) {
+				if (Main.running == 0) {
 					return;
 				} else {
 					sleep();

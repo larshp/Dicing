@@ -1,3 +1,5 @@
+// http://docs.oracle.com/javase/7/docs/api/java/util/concurrent/CountDownLatch.html
+
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
@@ -8,34 +10,37 @@ public class Main {
 	public static final int depth = 10;
 
 	// variables
-	public static volatile boolean running = true;
+	public static volatile int running = 0;
 
 	public static void main(String[] args) throws InterruptedException {
 
-		running = true;
+		BlockingQueue<String> q = new ArrayBlockingQueue<String>(1024);
 
 		Controller.init();
-
-		BlockingQueue<String> q = new ArrayBlockingQueue<String>(1024);
-		int count = 1000000;
-		RandomProducer p = new RandomProducer(count, q);
-		Consumer c = new Consumer(q);
+		
+		RandomProducer p = new RandomProducer(25000000, q);
 		new Thread(p).start();
+		p = new RandomProducer(25000000, q);
+		new Thread(p).start();
+		
+		Consumer c = new Consumer(q);
 		new Thread(c).start();
-
+		c = new Consumer(q);
+		new Thread(c).start();
+		
 		long startTime = System.currentTimeMillis();
 
-		while (running == true) {
+		Thread.sleep(100);
+		while (running > 0) {
 			Thread.sleep(100);
 		}
 
 		long stopTime = System.currentTimeMillis();
 		long elapsedSec = (stopTime - startTime) / 1000;
-		count = Controller.element_count;
-		System.out.println("Element count: " + count);
+		System.out.println("Element count: " + Controller.count());
 		System.out.println("Elapsed: " + elapsedSec + " sec");
 		if (elapsedSec != 0) {
-			System.out.println("Elements/sec: " + count / elapsedSec);
+			System.out.println("Elements/sec: " + Controller.count() / elapsedSec);
 		}
 
 		// memInfo();
