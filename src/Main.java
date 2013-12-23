@@ -8,24 +8,35 @@ public class Main {
 	public static final int depth = 10;
 
 	// variables
-	public static volatile int running = 0;
+	public static volatile int running = 0; // todo
 
 	public static void main(String[] args) throws InterruptedException {
+		setup();
+		info();
+	}
 
-		BlockingQueue<String> q = new ArrayBlockingQueue<String>(1024);
+	public static void setup() {
+		int max = 2000000;
+		int producers = 2;
+		int consumers = 2;
+
+		BlockingQueue<String> q = new ArrayBlockingQueue<String>(50000);
 
 		Controller.init();
 
-		int max = 1000000;
-		RandomProducer p = new RandomProducer(max/2, q);
-		new Thread(p).start();
-		p = new RandomProducer(max/2, q);
-		new Thread(p).start();
+		for (int i = 0; i < producers; i++) {
+			RandomProducer p = new RandomProducer(max / producers, q);
+			new Thread(p).start();
+		}
 
-		Consumer c = new Consumer(q);
-		new Thread(c).start();
-		c = new Consumer(q);
-		new Thread(c).start();
+		for (int i = 0; i < consumers; i++) {
+			Consumer c = new Consumer(q);
+			new Thread(c).start();
+		}
+
+	}
+
+	public static void info() throws InterruptedException {
 
 		long startTime = System.currentTimeMillis();
 
