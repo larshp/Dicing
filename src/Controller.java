@@ -1,4 +1,4 @@
-public class Controller {
+public class Controller extends Thread{
 
 	// 50 = 800 mb
 	// 60 = 960 mb
@@ -12,14 +12,18 @@ public class Controller {
 	private static int leaf_offset = 0;
 	private static int leaves = 0;
 
-	private static char nodedata[];
+//	private static char nodedata[];
 	private static byte[] leafdata[];
 
 	public static int element_count = 0;
 
+	Controller() {
+		System.out.println("thread");
+	}
+	
 	public static void init() {
 
-		boolean verbose = false;
+		boolean verbose = true;
 
 		int total = 0;
 		int last = 0;
@@ -44,7 +48,7 @@ public class Controller {
 					+ ", 4 per value");
 		}
 
-		nodedata = new char[total]; // node size is 2 bytes = 1 char
+		//nodedata = new char[total]; // node size is 2 bytes = 1 char
 		leafdata = new byte[leaf_size + 1][leaves];
 
 		System.out.println("Memory Allocated");
@@ -72,7 +76,7 @@ public class Controller {
 		return leafInsert(next_node - leaf_offset, str);
 	}
 
-	public static void nodeDump(int num) {
+/*	public static void nodeDump(int num) {
 
 		System.out.print("Node\t" + num + "\t[");
 
@@ -87,7 +91,7 @@ public class Controller {
 		}
 		System.out.println("]");
 	}
-
+*/
 	private static boolean leafInsert(int num, String str) {
 		// System.out.println("leaf insert\t" + num + "\t" + str.substring(6));
 
@@ -118,14 +122,14 @@ public class Controller {
 		// " value " + c);
 
 		int pos = toPos(c);
-		char data = toData(c);
+	//	char data = toData(c);
 
-		if ((char) (nodedata[num] & data) == data) {
+//		if ((char) (nodedata[num] & data) == data) {
 			// System.out.println("found");
-		} else {
+	//	} else {
 			// System.out.println("not found, inserting");
-			nodedata[num] = (char) (nodedata[num] | data);
-		}
+		//	nodedata[num] = (char) (nodedata[num] | data);
+	//	}
 
 		next = num * Main.vocabulary.length() + pos + 1;
 		// System.out.println("Next: " + next);

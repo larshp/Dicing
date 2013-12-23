@@ -1,31 +1,48 @@
 import java.util.Date;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
 public class Main {
 
 	// public static String vocabulary = "0123456789ABCDEFGHKMNPRSTVWXYZ";
-	public static String vocabulary = "0123456789ABCDEF";
-	public static int depth = 10;
+	public static final String vocabulary = "0123456789ABCDEF";
+	public static final int depth = 10;
 
-	public static void main(String[] args) {
+	// variables
+	public static volatile boolean running = true;
 
-		Controller.init();
+	public static void main(String[] args) throws InterruptedException {
 
 		/*
 		 * Controller.insert("000000AAAAA"); Controller.insert("002345AAAAA");
 		 * Controller.insert("88888888888"); Controller.insert("FFFFFEFFFFF");
 		 * Controller.insert("FFFFFFFFFFF");
 		 */
+
+		running = true;
+
+		Controller.init();
+
+		BlockingQueue<String> q = new ArrayBlockingQueue<String>(1024);
+		int count = 1000000;
+		RandomProducer p = new RandomProducer(count, q);
+		Consumer c = new Consumer(q);
+		new Thread(p).start();
+		new Thread(c).start();
+
 		long startTime = System.currentTimeMillis();
-		for (int i = 0; i < 50000000; i++) {
-			Controller.insert(random());
+
+		while (running == true) {
+			Thread.sleep(100);
 		}
+
 		long stopTime = System.currentTimeMillis();
 		long elapsedSec = (stopTime - startTime) / 1000;
-		System.out.println("Element count: " + Controller.element_count);		
+//		int count = Controller.element_count;
+		System.out.println("Element count: " + count);
 		System.out.println("Elapsed: " + elapsedSec + " sec");
 		if (elapsedSec != 0) {
-			System.out.println("Elements/sec: " + Controller.element_count
-					/ elapsedSec);
+			System.out.println("Elements/sec: " + count / elapsedSec);
 		}
 
 		/*
@@ -37,17 +54,6 @@ public class Main {
 		 */
 
 		// memInfo();
-	}
-
-	public static String random() {
-		String ret = "";
-
-		for (int i = 0; i < Main.depth; i++) {
-			ret = ret
-					+ Main.vocabulary.charAt((int) Math.ceil(Math.random()
-							* Main.vocabulary.length() - 1));
-		}
-		return ret;
 	}
 
 	public static void memInfo() {
