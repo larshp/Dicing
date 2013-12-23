@@ -35,6 +35,8 @@ Elements/sec: 93632
 Desktop with SSD
 ----------------
 
+[Intel Core i7-3770K @ 3.50GHz](http://www.cpubenchmark.net/cpu.php?cpu=Intel+Core+i7-3770K+%40+3.50GHz&id=2)
+
 1 gb ram
 Element count: 50000000
  Elapsed: 26 sec
