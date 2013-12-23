@@ -6,17 +6,19 @@ public class Main {
 	// public static String vocabulary = "0123456789ABCDEFGHKMNPRSTVWXYZ";
 	public static final String vocabulary = "0123456789ABCDEF";
 	public static final int depth = 10;
+	public static boolean persist = true;
 
 	// variables
 	public static volatile int running = 0; // todo
 
+	
 	public static void main(String[] args) throws InterruptedException {
 		setup();
 		info();
 	}
 
 	public static void setup() {
-		int max = 2000000;
+		int max = 10000000;
 		int producers = 2;
 		int consumers = 2;
 
