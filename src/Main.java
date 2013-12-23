@@ -1,5 +1,3 @@
-// http://docs.oracle.com/javase/7/docs/api/java/util/concurrent/CountDownLatch.html
-
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
@@ -17,17 +15,18 @@ public class Main {
 		BlockingQueue<String> q = new ArrayBlockingQueue<String>(1024);
 
 		Controller.init();
-		
-		RandomProducer p = new RandomProducer(25000000, q);
+
+		int max = 1000000;
+		RandomProducer p = new RandomProducer(max/2, q);
 		new Thread(p).start();
-		p = new RandomProducer(25000000, q);
+		p = new RandomProducer(max/2, q);
 		new Thread(p).start();
-		
+
 		Consumer c = new Consumer(q);
 		new Thread(c).start();
 		c = new Consumer(q);
 		new Thread(c).start();
-		
+
 		long startTime = System.currentTimeMillis();
 
 		Thread.sleep(100);
@@ -37,13 +36,15 @@ public class Main {
 
 		long stopTime = System.currentTimeMillis();
 		long elapsedSec = (stopTime - startTime) / 1000;
-		System.out.println("Element count: " + Controller.count());
+		System.out.println("Element count: " + Controller.element_count.get());
 		System.out.println("Elapsed: " + elapsedSec + " sec");
 		if (elapsedSec != 0) {
-			System.out.println("Elements/sec: " + Controller.count() / elapsedSec);
+			System.out.println("Elements/sec: "
+					+ Controller.element_count.get() / elapsedSec);
 		}
 
 		// memInfo();
+		System.out.println("Done");
 	}
 
 	public static void memInfo() {

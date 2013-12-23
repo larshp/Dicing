@@ -1,3 +1,7 @@
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class Controller {
 
 	// 50 = 800 mb
@@ -13,9 +17,8 @@ public class Controller {
 
 	private static byte[] leafdata[];
 
-	private static int element_count = 0;
+	public static AtomicInteger element_count = new AtomicInteger();
 
-	
 	public static void init() {
 
 		boolean verbose = true;
@@ -68,17 +71,17 @@ public class Controller {
 	}
 
 	private static boolean leafInsert(int num, String str) {
-//		System.out.println("Leaf insert\t" + num + "\t\t" + str.substring(6));
+		// System.out.println("Leaf insert\t" + num + "\t\t" +
+		// str.substring(6));
 
 		int per = leaves / leaf_size;
 		int index = num / per;
 		int sub = (num - index * per) * leaf_size;
 
 		// System.out.println("index " + index + " sub " + sub);
-		countInc();
+		element_count.getAndIncrement();
 
 		for (int i = sub; i < sub + leaf_size; i++) {
-			byte c = leafdata[index][sub];
 			if (leafdata[index][i] == 0x00) {
 				leafdata[index][i] = 0x0B;
 			} else {
@@ -89,14 +92,6 @@ public class Controller {
 		return false;
 	}
 
-	private static synchronized void countInc() {
-		element_count = element_count + 1;
-	}
-	
-	public static synchronized int count() {
-		return element_count;
-	}
-	
 	// return index of next node to visit
 	private static int nodeInsert(int num, int level, char c) {
 		int next;
