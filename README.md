@@ -1,7 +1,7 @@
 Dicing
 ======
 
-Simple hashing designed for speed and memory optimized plus persistance
+Simple hashing designed for speed and memory optimized plus persistence
 
  * 10 char key
  * 16 char vocabulary
