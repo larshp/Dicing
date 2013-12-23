@@ -9,6 +9,7 @@ Simple hashing designed for speed and memory optimized plus persistance
 1 gb ram = 587 mio combinations
 
 DR: persist to RAID
+
 HA: have backup PC ready
 
 
