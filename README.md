@@ -1,12 +1,15 @@
 Dicing
 ======
 
-Simple hashing designed for speed and memory optimized
+Simple hashing designed for speed and memory optimized plus persistance
 
  * 10 char key
  * 16 char vocabulary
 
 1 gb ram = 587 mio combinations
+
+DR: persist to RAID
+HA: have backup PC ready
 
 
 Laptop PC
