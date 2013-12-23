@@ -23,7 +23,6 @@ public class Main {
 		int consumers = 2;
 
 		BlockingQueue<String> q = new ArrayBlockingQueue<String>(50000);
-
 		Controller.init();
 
 		for (int i = 0; i < producers; i++) {

@@ -1,7 +1,7 @@
 Dicing
 ======
 
-Simple hashing designed for speed and memory optimized plus persistence
+Simple hashing designed for speed and memory optimized plus persistence. Currently only supports benchmarking, all logic not implemented.
 
  * 10 char key
  * 16 char vocabulary
@@ -46,12 +46,12 @@ Element count: 50000000
  Elapsed: 26 sec
 Elements/sec: 1923076
 
-10 gb ram
+8 gb ram
 Element count: 50000000 Elapsed: 38 sec
 Elements/sec: 1315789
 
 
-10 gb ram
+8 gb ram
 Element count: 100000000
 Elapsed: 81 sec
 Elements/sec: 1234567

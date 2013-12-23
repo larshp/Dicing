@@ -2,10 +2,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class Controller {
 
-	// 50 = 800 mb
-	// 60 = 960 mb
-	// 400 = 6400 mb
-	// 800 = 12800 mb
+	//   50 =   800 mb
+	//   60 =   960 mb
+	//  400 =  6400 mb
+	//  500 =  8000 mb
+	//  800 = 12800 mb
 	// 2000 = 32000 mb
 	private static final int leaf_size = 70; // in bytes, increase with 10
 	private static final int node_levels = 5; // plus one
@@ -34,11 +35,13 @@ public class Controller {
 		leaves = last * Main.vocabulary.length();
 
 		if (verbose == true) {
-			System.out.println("Leaves:\t" + leaves + "("
-					+ (leaves * leaf_size / 1024 / 1024) + "mb)");
+			long mb = ((long) leaves * leaf_size / 1024 / 1024);
+			System.out.println("Leaves:\t" + leaves + "(" + mb + "mb)");
 			System.out.println("Bits per leaf:\t" + leaf_size * 8);
-			System.out.println("Chars per leaf:\t" + leaf_size * 8 / 4
-					+ ", 4 per value");
+			long chars = leaf_size * 8 / 4;
+			System.out.println("Chars per leaf:\t" + chars + ", 4 per value");
+			long cap = ((long) chars / 4) * leaves;
+			System.out.println("Capacity: " + cap + " keys");
 		}
 
 		leafdata = new byte[leaf_size + 1][leaves];
